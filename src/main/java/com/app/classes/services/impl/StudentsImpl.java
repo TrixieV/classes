@@ -3,8 +3,8 @@ package com.app.classes.services.impl;
 import com.app.classes.entities.Student;
 import com.app.classes.repositories.StudentRepo;
 import com.app.classes.services.StudentsService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,18 +12,19 @@ import java.util.Optional;
 
 @Service
 public class StudentsImpl implements StudentsService {
+    @Autowired
     private StudentRepo studentRepo;
 
     @Override
-    public List<Student> findAllStudent() {
-        return studentRepo.findAll();
+    public Optional<List<Student>> findAllStudent() {
+        return Optional.of(studentRepo.findAll());
     }
 
     @Override
     public Optional<Student> findByStudentId(Integer id) {
         try {
-            return Optional.of(studentRepo.getReferenceById(id));
-        } catch (EntityNotFoundException e) {
+            return studentRepo.findById(id);
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
@@ -39,7 +40,7 @@ public class StudentsImpl implements StudentsService {
             Student existingStudent = studentRepo.getReferenceById(id);
             BeanUtils.copyProperties(student, existingStudent, "id");
             return Optional.of(studentRepo.save(existingStudent));
-        } catch (EntityNotFoundException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return Optional.empty();
         }
@@ -49,7 +50,7 @@ public class StudentsImpl implements StudentsService {
     public void deleteStudent(Integer id) {
         try {
             studentRepo.deleteById(id);
-        } catch (EntityNotFoundException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

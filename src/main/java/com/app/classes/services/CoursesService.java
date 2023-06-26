@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CoursesService {
-    List<Course> findAllCourses();
+    Optional<List<Course>> findAllCourses();
+
     Optional<Course> findByCourseId(Integer id);
+
     Optional<Course> createCourse(Course course);
+
     Optional<Course> updateCourse(Integer id, Course course);
+
     void deleteCourse(Integer id);
 }
