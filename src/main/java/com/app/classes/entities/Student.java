@@ -3,6 +3,8 @@ package com.app.classes.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "students")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -23,6 +25,13 @@ public class Student {
 
     @Column(name = "gender")
     private String gender;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_courses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private List<Course> courses;
 
     public Student(Integer id, String firstName, String lastName, String dateOfBirth, String gender) {
         this.id = id;

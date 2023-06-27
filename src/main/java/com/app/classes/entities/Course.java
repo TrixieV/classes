@@ -1,7 +1,10 @@
 package com.app.classes.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -16,20 +19,37 @@ public class Course {
     @Column(name = "name")
     private String name;
 
-    public Course(Integer id, String name) {
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = true)
+    private Teacher teacher;
+
+    @ManyToMany(mappedBy = "courses")
+    @JsonIgnore
+    private List<Student> students;
+
+    public Course(Integer id, String name, Teacher teacher) {
         this.id = id;
         this.name = name;
+        this.teacher = teacher;
     }
 
     public Course() {
     }
 
-    public Integer getId() {
-        return id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getName() {
