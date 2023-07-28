@@ -33,12 +33,13 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses;
 
-    public Student(Integer id, String firstName, String lastName, String dateOfBirth, String gender) {
+    public Student(Integer id, String firstName, String lastName, String dateOfBirth, String gender, List<Course> courses) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
+        this.courses = courses;
     }
 
     public Student() {
@@ -82,5 +83,13 @@ public class Student {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }

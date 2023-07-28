@@ -33,6 +33,13 @@ public class Course {
         this.teacher = teacher;
     }
 
+    public Course(Integer id, String name, Teacher teacher, List<Student> students) {
+        this.id = id;
+        this.name = name;
+        this.teacher = teacher;
+        this.students = students;
+    }
+
     public Course() {
     }
 
