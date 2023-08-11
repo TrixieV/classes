@@ -12,6 +12,16 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
+    SecurityFilterChain chain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests((request) -> request
+                .requestMatchers("/v1/courses").hasRole("MANAGER")
+                .requestMatchers("/v1/teachers/**").hasAnyRole("MANAGER", "TEACHER")
+                .requestMatchers("/v1/students/**").authenticated()
+        );
+        return http.build();
+    }
+
+    @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
         UserDetails trixie = User.builder()
                 .username("trixie")
